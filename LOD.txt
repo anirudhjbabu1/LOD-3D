@@ -1,0 +1,69 @@
+# Download Lidar Data set
+
+```outputFolder = fullfile(tempdir,'Pandaset');
+
+lidarURL = ['https://ssd.mathworks.com/supportfiles/lidar/data/' ...
+    'Pandaset_LidarData.tar.gz'];
+helperDownloadPandasetData(outputFolder,lidarURL);
+```
+# Load Data set
+```
+path = fullfile(outputFolder,'Lidar');
+lidarData = fileDatastore(path,'ReadFcn',@(x) pcread(x));
+```
+# Load the 3-D bounding box labels of the car and truck objects.
+```
+gtPath = fullfile(outputFolder,'Cuboids','PandaSetLidarGroundTruth.mat');
+data = load(gtPath,'lidarGtLabels');
+Labels = timetable2table(data.lidarGtLabels);
+boxLabels = Labels(:,2:3);
+```
+# Display the full-view point cloud.
+
+```figure
+ptCld = preview(lidarData);
+ax = pcshow(ptCld.Location);
+set(ax,'XLim',[-50 50],'YLim',[-40 40]);
+zoom(ax,2.5);
+axis off;
+```
+
+# Preprocess Data
+
+```
+xMin = 0.0;     % Minimum value along X-axis.
+yMin = -39.68;  % Minimum value along Y-axis.
+zMin = -5.0;    % Minimum value along Z-axis.
+xMax = 69.12;   % Maximum value along X-axis.
+yMax = 39.68;   % Maximum value along Y-axis.
+zMax = 5.0;     % Maximum value along Z-axis.
+xStep = 0.16;   % Resolution along X-axis.
+yStep = 0.16;   % Resolution along Y-axis.
+
+% Define point cloud parameters.
+pointCloudRange = [xMin xMax yMin yMax zMin zMax];
+voxelSize = [xStep yStep];
+```
+
+# Use the cropFrontViewFromLidarData helper function, attached to this example as a supporting file, to:
+
+Crop the front view from the input full-view point cloud.
+
+Select the box labels that are inside the ROI specified by gridParams.
+
+```
+[croppedPointCloudObj,processedLabels] = cropFrontViewFromLidarData(...
+    lidarData,boxLabels,pointCloudRange);
+
+```
+
+# Display the cropped point cloud and the ground truth box labels.
+
+```
+pc = croppedPointCloudObj{1,1};
+bboxes = [processedLabels.Car{1};processedLabels.Truck{1}];
+
+ax = pcshow(pc);
+showShape('cuboid',bboxes,'Parent',ax,'Opacity',0.1,...
+        'Color','green','LineWidth',0.5);
+```
