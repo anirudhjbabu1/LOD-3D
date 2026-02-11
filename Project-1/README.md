@@ -12,3 +12,6 @@ The paper introduced:
 - END-to-END 3D detection architecture: that simultaneously learns the feeature representation from the raw point cloud data and predicts accureate 3D bounding boxes in an end-to-end fashion.
 
 VoxelNet in a nutshell “ Divide the point clouds into equally spaced 3D voxels, encode each voxel via stacked VFE layers into a vector, and then aggregate (combine) the local voxel features using 3D convolutional layers, transform the point cloud into high dimensional volumetric representation. Finally, the modified RPN network which intakes the volumetric representation and provides the detection result"
+
+
+https://medium.com/data-science/lidar-point-cloud-based-3d-object-detection-implementation-with-colab-part-1-of-2-e3999ea8fdd4
