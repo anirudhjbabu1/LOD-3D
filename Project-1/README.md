@@ -1,6 +1,6 @@
 # Lidar based 3D object detection using Voxelnet
 
-reference - VoxelNet: End-to-end learning for point cloud-based 3D object detection.
+Reference - VoxelNet: End-to-end learning for point cloud-based 3D object detection.
 Authors: Yin Zhou, Oncel Tuzel - Apple Inc
 
 Challenges - Replacing Manual feaeture extraction
