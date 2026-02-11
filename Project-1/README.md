@@ -10,3 +10,5 @@ The paper introduced:
 - FLN feateure learning network, A machine - learned feature extractor introduced to effectively extract the 3D shape information.
 - Reducing computation and focus on memory constraints. Voxel grouping and random sampling technique is used to process the voxeks containing more than a T number of points in the voxel.
 - END-to-END 3D detection architecture: that simultaneously learns the feeature representation from the raw point cloud data and predicts accureate 3D bounding boxes in an end-to-end fashion.
+
+VoxelNet in a nutshell “ Divide the point clouds into equally spaced 3D voxels, encode each voxel via stacked VFE layers into a vector, and then aggregate (combine) the local voxel features using 3D convolutional layers, transform the point cloud into high dimensional volumetric representation. Finally, the modified RPN network which intakes the volumetric representation and provides the detection result"
